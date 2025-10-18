@@ -1,0 +1,40 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "smali",
+      "camelcase": "Smali",
+      "title": "Smali",
+      "scope": "source.smali",
+      "file-types": [
+        "smali"
+      ],
+      "injection-regex": "^smali$",
+      "class-name": "TreeSitterSmali"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "dalvik's smali parser",
+    "authors": [
+      {
+        "name": "Flying Yu",
+        "email": "zhengyuzyyou@gmail.com",
+        "url": "https://github.com/FlyiingYu-Z"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/FlyiingYu-Z/tree-sitter-smali"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "node": false,
+    "python": false,
+    "rust": true,
+    "swift": false,
+    "zig": false
+  }
+}

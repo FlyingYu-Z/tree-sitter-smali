@@ -150,6 +150,35 @@ Test a class with a non valid Java character
     (string)))
 
 
+========================================================================
+Test a class with empty segments
+========================================================================
+
+.class public LA//BC;
+.super Ljava//lang//Object;
+.source ""
+
+---
+
+(class_definition
+  (class_directive
+    (access_modifiers
+      (access_modifier))
+    (class_identifier
+      (identifier)
+      (identifier)
+      (identifier)))
+  (super_directive
+    (class_identifier
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier)))
+  (source_directive
+    (string)))
+
+
 
 ========================================================================
 Test a class without an access modifier

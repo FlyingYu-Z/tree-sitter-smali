@@ -18,16 +18,18 @@
   },
   "homepage": "https://git.sr.ht/~yotam/tree-sitter-smali#readme",
   "dependencies": {
-    "nan": "^2.15.0"
+    "nan": "^2.17.0"
   },
   "devDependencies": {
     "eslint": "^8.32.0",
     "eslint-config-google": "^0.14.0",
-    "tree-sitter-cli": "^0.20.8"
+    "node-addon-api": "^8.2.2",
+    "node-gyp-build": "^4.8.2",
+    "tree-sitter-cli": "^0.25.6"
   },
   "repository": "https://git.sr.ht/~yotam/tree-sitter-smali",
   "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
+    "build": "tree-sitter generate && node-gyp-build",
     "parse": "tree-sitter parse",
     "test": "tree-sitter test && script/parse-examples",
     "test-windows": "tree-sitter test"
