@@ -1,21 +1,8 @@
 ; Types
 
-(class_identifier
-  (identifier) @type)
+(class_identifier) @type
 
 (primitive_type) @type.builtin
-
-((class_identifier
-   . (identifier) @_first @type.builtin
-   (identifier) @type.builtin)
-  (#any-of? @_first "android" "dalvik" "java" "kotlinx"))
-
-((class_identifier
-   . (identifier) @_first @type.builtin
-   .  (identifier) @_second @type.builtin
-   (identifier) @type.builtin)
-  (#eq? @_first "com")
-  (#any-of? @_second "android" "google"))
 
 ; Methods
 
@@ -118,6 +105,7 @@
 [
   ".class"
   ".super"
+  ".source"
   ".implements"
   ".field"
   ".end field"

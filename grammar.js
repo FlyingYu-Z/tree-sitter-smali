@@ -397,7 +397,7 @@ module.exports = grammar({
       '.field',
       optional($.access_modifiers),
       $._field_body,
-      optional(seq('=', $.value)),
+      optional(seq('=', $.encoded_value)),
       optional(seq(
         repeat($.annotation_directive),
         '.end field',
@@ -422,22 +422,40 @@ module.exports = grammar({
       '.end annotation',
     ),
     annotation_visibility: _ => choice('system', 'build', 'runtime'),
-    annotation_property: $ => seq($.annotation_key, '=', $.annotation_value),
+    annotation_property: $ => seq($.annotation_key, '=', $.encoded_value),
     annotation_key: _ => /\w+/,
-    annotation_value: $ => choice(
-      $.literal,
-      $.body,
-      $.list,
-      $.enum_reference,
-      $.subannotation_directive,
-      $.class_identifier,
-    ),
 
     subannotation_directive: $ => seq(
       '.subannotation',
       $.class_identifier,
       repeat($.annotation_property),
       '.end subannotation',
+    ),
+
+    encoded_value: $ => choice(
+      $.type,
+      $.literal,
+      $.body,
+      $.value_field_reference,
+      $.value_enum_reference,
+      $.subannotation_directive,
+      $.encoded_array,
+    ),
+
+    value_field_reference: $ => seq(
+      '.field',
+      choice($._field_body, $._full_field_body),
+    ),
+
+    value_enum_reference: $ => seq(
+      '.enum',
+      choice($._field_body, $._full_field_body),
+    ),
+
+    encoded_array: $ => seq(
+      '{',
+      commaSep($.encoded_value),
+      '}',
     ),
 
     param_directive: $ => prec.right(seq(
@@ -484,7 +502,7 @@ module.exports = grammar({
       $.register,
       $.body,
       $.literal,
-      $.enum_reference,
+      $.value_enum_reference,
       $.subannotation_directive,
       $.method_handle,
       $.custom_invoke,
@@ -647,11 +665,6 @@ module.exports = grammar({
     _method_access_modifiers: $ => repeat1(choice($.access_modifier, 'constructor')),
 
     access_modifier: _ => choice(...access_flags.concat(restriction_flags)),
-
-    enum_reference: $ => seq(
-      '.enum',
-      choice($._field_body, $._full_field_body),
-    ),
 
     // special builtins
     register: $ => choice($.variable, $.parameter),

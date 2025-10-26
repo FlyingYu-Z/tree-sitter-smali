@@ -154,7 +154,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "value"
+                  "name": "encoded_value"
                 }
               ]
             },
@@ -283,42 +283,13 @@
         },
         {
           "type": "SYMBOL",
-          "name": "annotation_value"
+          "name": "encoded_value"
         }
       ]
     },
     "annotation_key": {
       "type": "PATTERN",
       "value": "\\w+"
-    },
-    "annotation_value": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "literal"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "body"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "list"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "enum_reference"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "subannotation_directive"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "class_identifier"
-        }
-      ]
     },
     "subannotation_directive": {
       "type": "SEQ",
@@ -341,6 +312,129 @@
         {
           "type": "STRING",
           "value": ".end subannotation"
+        }
+      ]
+    },
+    "encoded_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "body"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "value_field_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "value_enum_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "subannotation_directive"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "encoded_array"
+        }
+      ]
+    },
+    "value_field_reference": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ".field"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_field_body"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_full_field_body"
+            }
+          ]
+        }
+      ]
+    },
+    "value_enum_reference": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ".enum"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_field_body"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_full_field_body"
+            }
+          ]
+        }
+      ]
+    },
+    "encoded_array": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "encoded_value"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "encoded_value"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },
@@ -1639,7 +1733,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "enum_reference"
+          "name": "value_enum_reference"
         },
         {
           "type": "SYMBOL",
@@ -2763,28 +2857,6 @@
         {
           "type": "STRING",
           "value": "test-api"
-        }
-      ]
-    },
-    "enum_reference": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": ".enum"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_field_body"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_full_field_body"
-            }
-          ]
         }
       ]
     },
